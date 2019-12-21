@@ -1,0 +1,23 @@
+<view class="container">
+  <!-- 当前温度 -->
+  <view class="currentTemp">
+     当前温度：3°C
+  </view>
+<!-- 
+  <image src="cloud://first-edition-f36bb9.6669-first-edition-f36bb9-1258441215/http/tmp/wxfaf6e29514073338.o6zAJsx_4dSeqrJF_UpI3sfigGlk.rMJLEpzBMPoc3073508cc3f96d59f83f6fad7f4e2c80.PNG"></image> -->
+<!-- 
+  <view wx:for="{{clothesList}}">{{item.photoId}}
+  </view> -->
+
+  <!-- 推荐穿搭 -->
+  <view class="recommendStyle">
+    <view class="title">推荐穿搭</view>
+    <swiper class="clothes">
+      <block wx:for="{{clothesList}}"wx:key="*this">
+          <swiper-item class="clothes-item">
+              <image clss="clothes-item"src="{{item.photoId}}"></image>
+          </swiper-item>
+      </block>
+    </swiper>
+  </view>
+</view>

@@ -1,0 +1,23 @@
+.container{
+  display:flex;
+  flex-direction:column;
+}
+
+.currentTemp{
+  margin-top:100rpx;
+  margin-left:80rpx;
+}
+
+.recommendStyle{
+  margin-top:50rpx;
+  margin-left:80rpx;
+}
+
+.clothes{
+  margin-top:10rpx;
+}
+
+.clothes-item{
+  width:200rpx;
+  height:200rpx;
+}
