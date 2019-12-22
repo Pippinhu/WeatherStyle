@@ -4,20 +4,14 @@ const db = wx.cloud.database();
 
 Page({
   data: {
-    clothesList:[]
+    clothesList:[],
+    now:0,
+    feel:0,
+    wind:0,
+    humid:0
   },
 
   onLoad: function() {
-
-    // db.collection('style').get({
-    //   success: function(res) {
-    //     // res.data 包含该记录的数据
-    //     console.log(res.data)
-    //     this.setData({
-    //       clothesList:res.data
-    //     })
-    //   }
-    // })
     db.collection('style').get().then(res => {
       // res.data 包含该记录的数据
       console.log(res.data)
@@ -25,7 +19,6 @@ Page({
               clothesList:res.data
             })
     })
-
 
     // 获取用户信息
     wx.getSetting({
@@ -43,7 +36,54 @@ Page({
         }
       }
     })
+    this.getLocation()
   },
+
+  //获取地理位置
+  getLocation:function(){
+    let that = this;
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+      let latitude = res.latitude
+      let longitude = res.longitude
+      console.log(res.latitude);
+      console.log(res.longitude);
+      that.getWeatherInfo(latitude, longitude);
+      }
+    })
+  },
+
+  //获取天气信息
+  getWeatherInfo: function (latitude, longitude){
+    let _this = this;
+    let key = '7c6e5f9000cb4ddba8a2f74c754c1fa5';
+    let url = 'https://free-api.heweather.com/s6/weather?key='+key+'&location=' + longitude + ',' + latitude;
+    wx.request({
+      url: url, 
+      data: {},
+      method: 'GET',
+      success: function (res) {
+
+      //当下天气
+      let weather_now = res.data.HeWeather6[0].now["tmp"];
+      console.log(weather_now)
+      //体感温度
+      let weather_feel=res.data.HeWeather6[0].now["fl"];
+      //风力
+      let wind=res.data.HeWeather6[0].now["wind_sc"];
+      //湿度
+      let humid=res.data.HeWeather6[0].now["hum"];
+      _this.setData({
+        now:weather_now,
+        feel:weather_feel,
+        wind: wind,
+        humid:humid,
+    });
+    },
+    })
+  },
+
 
   onGetUserInfo: function(e) {
     if (!this.data.logged && e.detail.userInfo) {
