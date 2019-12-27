@@ -11,3 +11,5 @@
       <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
     </view>
   </view>
+
+  <view>just a GIT test</view>
